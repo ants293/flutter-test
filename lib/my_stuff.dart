@@ -14,8 +14,12 @@ class MyStuff extends StatelessWidget {
         body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _renderFacts(location),
-        )
+            children: [
+              _someImage(location.url),
+              Text(location.name),
+              ..._renderFacts(location),
+            ]
+        ),
     );
   }
 
@@ -34,7 +38,13 @@ class MyStuff extends StatelessWidget {
     }
 
     return result;
+  }
 
+  Widget _someImage(String url) {
+    return Container(
+      constraints: BoxConstraints.tightFor(height: 300),
+      child: Image.network(url, fit: BoxFit.fitWidth, alignment: Alignment.center)
+    );
   }
 
   Widget _tester(String title, Color color) {
