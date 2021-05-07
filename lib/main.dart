@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_reader/loc_list.dart';
-import 'mocks/mock_location.dart';
-import 'models/location.dart';
-import 'my_stuff.dart';
+import 'package:news_reader/teststuff/loc_list.dart';
+import 'teststuff/mocks/mock_location.dart';
+import 'teststuff/models/location.dart';
+import 'teststuff/my_stuff.dart';
 
 void main() {
   runApp(MyApp());

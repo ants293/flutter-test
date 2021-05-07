@@ -1,5 +1,5 @@
-import 'package:news_reader/models/location.dart';
-import 'package:news_reader/models/location_fact.dart';
+import 'package:news_reader/teststuff/models/location.dart';
+import 'package:news_reader/teststuff/models/location_fact.dart';
 
 class MockLocation extends Location {
   static Location FetchAny() {
