@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_reader/loc_list.dart';
 import 'mocks/mock_location.dart';
 import 'models/location.dart';
 import 'my_stuff.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
     );*/
 
     return MaterialApp(
-      home: MyStuff(mockLoc)
+      // home: MyStuff(mockLoc)
+        home: LocList([])
     );
   }
 }
