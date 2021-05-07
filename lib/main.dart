@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:news_reader/config/routes.dart';
-import 'package:news_reader/teststuff/loc_list.dart';
-import 'teststuff/mocks/mock_location.dart';
-import 'teststuff/models/location.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() async {
 
-class MyApp extends StatelessWidget {
-  final Location mockLoc = MockLocation.FetchAny();
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
+  await initHiveForFlutter();
 
-    return MaterialApp(
-        initialRoute: '/',
-        routes: Routes.routes
-    );
-  }
+  final HttpLink httpLink = HttpLink(
+    'https://news-reader.stagnationlab.dev/graphql',
+  );
+
+  ValueNotifier<GraphQLClient> client = ValueNotifier(
+    GraphQLClient(
+      link: httpLink,
+      cache: GraphQLCache(store: HiveStore()),
+    ),
+  );
+
+  runApp(
+      GraphQLProvider(
+        client: client,
+        child: MaterialApp(
+            initialRoute: '/',
+            routes: Routes.routes
+        )
+      )
+  );
+
 }
 
 class MyHomePage extends StatefulWidget {
