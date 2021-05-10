@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+// https://ferrygraphql.com/
+
 
 class ArticleList extends StatelessWidget {
 
@@ -34,46 +36,34 @@ class ArticleList extends StatelessWidget {
           return Text(result.exception.toString());
         }
 
-        if (result.isLoading) {
+        if (result.isLoading || res.isEmpty) {
           return Text('Loading');
         }
 
-        return GridView.builder(
-          itemCount:res.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 3: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: (2 / 1),
-          ),
-          itemBuilder: (context,index,) {
-            return Container(
-                child: Column(
-                  mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                  children: [
-                    this._article(res[index]['title'], res[index]['img'])
-                  ],
-                ),
-              );
-          },
-        );
-
+        return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: res.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+              children: [
+                this._article(res[index]['title'], res[index]['img']),
+                SizedBox(height: 15),
+              ],
+            );
+          });
       },
     );
   }
 
   Widget _article(String title, String img) {
-    return Expanded(
-      child: Column(
-        children: [
-          Text(title),
-          Container(
-              child: Expanded(child: Image.network('$img', fit: BoxFit.cover, alignment: Alignment.center, height: double.infinity, width: double.infinity))
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        Image.network('$img', fit: BoxFit.cover, alignment: Alignment.center, height: 100, width: 100),
+        SizedBox(width: 10),
+        Expanded(child: Text(title)),
+      ],
     );
 
-
   }
+
 }
