@@ -1,7 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:news_reader/models/article.dart';
 
 class ArticleList extends StatelessWidget {
 
@@ -29,7 +28,9 @@ class ArticleList extends StatelessWidget {
         },
       ),
        builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }) {
-        if (result.hasException) {
+         List res = result.data['newsList']['rows'];
+
+         if (result.hasException) {
           return Text(result.exception.toString());
         }
 
@@ -37,25 +38,42 @@ class ArticleList extends StatelessWidget {
           return Text('Loading');
         }
 
-        List res = result.data['newsList']['rows'];
-
-        return ListView.builder(
-            itemCount: res.length,
-            itemBuilder: (context, index) {
-              var rep = res[index];
-
-              return Column(
-                children: [
-                  Text(rep['id']),
-                  Text(rep['title']),
-                  Container(
-                    constraints: BoxConstraints.tightFor(height: 300),
-                    child: Image.network('https://cors-anywhere.herokuapp.com/${rep['img']}', fit: BoxFit.fitWidth, alignment: Alignment.center)
-                  ),
-                ],
+        return GridView.builder(
+          itemCount:res.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 3: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: (2 / 1),
+          ),
+          itemBuilder: (context,index,) {
+            return Container(
+                child: Column(
+                  mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                  children: [
+                    this._article(res[index]['title'], res[index]['img'])
+                  ],
+                ),
               );
-            });
+          },
+        );
+
       },
     );
+  }
+
+  Widget _article(String title, String img) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(title),
+          Container(
+              child: Expanded(child: Image.network('$img', fit: BoxFit.cover, alignment: Alignment.center, height: double.infinity, width: double.infinity))
+          ),
+        ],
+      ),
+    );
+
+
   }
 }
