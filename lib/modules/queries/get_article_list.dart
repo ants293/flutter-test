@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:news_reader/models/article_screen_args.dart';
+import 'package:news_reader/modules/screens/article_screen.dart';
 // https://ferrygraphql.com/
 
 
@@ -46,7 +48,7 @@ class ArticleList extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
-                this._article(res[index]['title'], res[index]['img']),
+                this._article(res[index]['id'], res[index]['title'], res[index]['img'], context),
                 SizedBox(height: 15),
               ],
             );
@@ -55,14 +57,24 @@ class ArticleList extends StatelessWidget {
     );
   }
 
-  Widget _article(String title, String img) {
-    return Row(
+  Widget _article(String id, String title, String img, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          ArticleScreen.routeName,
+          arguments: ArticleScreenArgs(
+            id,
+          ),
+        );
+      },
+      child: Row(
       children: [
         Image.network('$img', fit: BoxFit.cover, alignment: Alignment.center, height: 100, width: 100),
         SizedBox(width: 10),
         Expanded(child: Text(title)),
       ],
-    );
+    ));
 
   }
 
