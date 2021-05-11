@@ -40,18 +40,28 @@ class ArticleSingle extends StatelessWidget {
           return Text(result.exception.toString());
         }
 
-        var article = result.data['newsItem'];
-        if (result.isLoading || article == null) {
+        if (result.isLoading || result.data['newsItem'] == null) {
           return Text('Loading');
         }
 
+        var article = result.data['newsItem'];
 
         return Container(
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(article['title']),
-              Image.network('${article['img']}', fit: BoxFit.cover, alignment: Alignment.center, height: 100, width: 100),
-              Text(article['content'])
+              Center(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: Text(article['title']),
+                ),
+              ),
+              Image.network('${article['img']}', fit: BoxFit.cover, alignment: Alignment.center, height: 200),
+              Container(
+                child: Text(article['content']),
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              ),
             ],
           ),
         );
