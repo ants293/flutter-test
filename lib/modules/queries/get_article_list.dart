@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:news_reader/models/article_screen_args.dart';
@@ -8,7 +7,7 @@ import 'package:news_reader/modules/screens/article_screen.dart';
 
 class ArticleList extends StatelessWidget {
 
-  static String readRepositories = """
+  static String readArticles = """
     query getArticlesList(\$skip: Int!, \$limit: Int!) {
       newsList(skip: \$skip, limit: \$limit) {
         totalRows
@@ -25,7 +24,7 @@ class ArticleList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Query(
       options: QueryOptions(
-        document: gql(readRepositories),
+        document: gql(readArticles),
         variables: {
           'skip': 0,
           'limit': 9999

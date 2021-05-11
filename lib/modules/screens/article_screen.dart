@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:news_reader/models/article_screen_args.dart';
+import 'package:news_reader/modules/queries/get_single_article.dart';
 
 class ArticleScreen extends StatelessWidget {
   static const routeName = '/extractArguments';
@@ -13,7 +14,7 @@ class ArticleScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(args.id),
       ),
-      body: Text("yolo"),
+      body: ArticleSingle(args.id),
     );
   }
 }
