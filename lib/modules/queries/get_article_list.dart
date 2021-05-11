@@ -33,10 +33,10 @@ class ArticleList extends StatelessWidget {
           'limit': 9999
         },
       ),
-       builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }) {
+       builder: (QueryResult result, { refetch, fetchMore }) {
 
-         var articles = (result.data['newsList']['rows'] as List)
-             .map((data) => new Article.fromJson(data))
+         final articles = (result.data!['newsList']['rows'] as List)
+             .map((data) => Article.fromJson(data))
              .toList();
 
          if (result.hasException) {

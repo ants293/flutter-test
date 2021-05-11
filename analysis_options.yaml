@@ -1,0 +1,31 @@
+# using lint packgage as base ruleset
+# https://pub.dev/packages/lint
+include: package:lint/analysis_options.yaml
+analyzer:
+  exclude:
+    - build/**
+    - lib/api/**
+    - lib/generated/**
+    - lib/schema.*.dart
+    - lib/serializers.gql.dart
+  strong-mode:
+    # breaks intl, see https://github.com/dart-lang/intl_translation/pull/112
+    # and https://github.com/localizely/flutter-intl-vscode/issues/25
+    # implicit-casts: false
+    implicit-casts: true
+  errors:
+    todo: ignore
+linter:
+  rules:
+    # rules to enable
+    prefer_single_quotes: true
+    # rules to disable
+    avoid_redundant_argument_values: false
+    prefer_if_elements_to_conditional_expressions: false
+    sized_box_for_whitespace: false
+    avoid_bool_literals_in_conditional_expressions: false
+    avoid_classes_with_only_static_members: false
+    use_string_buffers: false
+    join_return_with_assignment: false
+    prefer_conditional_assignment: false
+    sort_pub_dependencies: false
