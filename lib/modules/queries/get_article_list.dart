@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:news_reader/models/article.dart';
 import 'package:news_reader/models/article_screen_args.dart';
 import 'package:news_reader/modules/screens/article_screen.dart';
 // https://ferrygraphql.com/
@@ -31,23 +34,26 @@ class ArticleList extends StatelessWidget {
         },
       ),
        builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }) {
-         List res = result.data['newsList']['rows'];
+
+         var articles = (result.data['newsList']['rows'] as List)
+             .map((data) => new Article.fromJson(data))
+             .toList();
 
          if (result.hasException) {
           return Text(result.exception.toString());
         }
 
-        if (result.isLoading || res.isEmpty) {
+        if (result.isLoading || articles.isEmpty) {
           return Text('Loading');
         }
 
         return ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: res.length,
+          itemCount: articles.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
-                this._article(res[index]['id'], res[index]['title'], res[index]['img'], context),
+                this._article(articles[index].id, articles[index].title, articles[index].img, context),
                 SizedBox(height: 15),
               ],
             );

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:news_reader/models/article.dart';
 
 class ArticleSingle extends StatelessWidget {
   final String id;
@@ -10,7 +12,7 @@ class ArticleSingle extends StatelessWidget {
 
   static String readSingleArticle = """
     query getArticlesList(\$id: ID!) {
-        newsItem(id: \$id) {
+      newsItem(id: \$id) {
         id
         title
         content
@@ -40,11 +42,11 @@ class ArticleSingle extends StatelessWidget {
           return Text(result.exception.toString());
         }
 
-        if (result.isLoading || result.data['newsItem'] == null) {
+        if (result.isLoading || result.data == null) {
           return Text('Loading');
         }
 
-        var article = result.data['newsItem'];
+        var article = new Article.fromJson(result.data['newsItem']);
 
         return Container(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -54,12 +56,12 @@ class ArticleSingle extends StatelessWidget {
               Center(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  child: Text(article['title']),
+                  child: Text(article.title),
                 ),
               ),
-              Image.network('${article['img']}', fit: BoxFit.cover, alignment: Alignment.center, height: 200),
+              Image.network('${article.img}', fit: BoxFit.cover, alignment: Alignment.center, height: 200),
               Container(
-                child: Text(article['content']),
+                child: Text(article.content),
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
               ),
             ],
