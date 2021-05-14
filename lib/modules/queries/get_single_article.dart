@@ -33,11 +33,10 @@ class ArticleSingle extends StatelessWidget {
       options: QueryOptions(
         document: gql(readSingleArticle),
         variables: {
-          'id': this.id,
+          'id': id,
         },
       ),
-      builder: (QueryResult result, { refetch, fetchMore }) {
-
+      builder: (QueryResult result, {refetch, fetchMore}) {
         if (result.hasException) {
           return Text(result.exception.toString());
         }
@@ -48,41 +47,56 @@ class ArticleSingle extends StatelessWidget {
 
         final article = Article.fromJson(result.data!['newsItem']);
 
-        return
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                      child: Text(article.title),
-                    ),
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    child: Text(article.title),
                   ),
-                  Image.network('${article.img}', fit: BoxFit.cover, alignment: Alignment.center, height: 200),
-                  Container(
-                    child: Text(article.content),
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  ),
-                  ...article.comments.map((comment) => Text('${comment.email}'))
-                ],
-              ),
+                ),
+                Image.network('${article.img}',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    height: 200),
+                Container(
+                  child: Text(article.content),
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                ),
+                ...article.comments.map(
+                  (comment) => Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 0.8, color: Colors.blue),
+                        ),
+                      ),
+                      child: Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _getComment(comment),
+                      ))),
+                )
+              ],
             ),
-          );
-
+          ),
+        );
       },
     );
   }
 
-  static Widget _getComments(List<Comment> comments) {
-    return ListView.builder(
-        itemCount: comments.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) {
-          return Text('${comments[index].email}');
-        },
-      );
+  static List<Widget> _getComment(Comment comment) {
+    return [
+      SizedBox(height: 12),
+      Text(
+        comment.email,
+        style: TextStyle(fontSize: 10, color: Colors.lightBlue),
+      ),
+      Text(comment.content),
+      SizedBox(height: 5),
+    ];
   }
 }

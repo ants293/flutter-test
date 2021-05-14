@@ -8,11 +8,12 @@ class ArticleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ArticleScreenArgs args = ModalRoute.of(context)!.settings.arguments as ArticleScreenArgs;
+    final ArticleScreenArgs args =
+        ModalRoute.of(context)!.settings.arguments as ArticleScreenArgs;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.id),
+        title: const Text('My app'),
       ),
       body: ArticleSingle(args.id),
     );

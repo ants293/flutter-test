@@ -4,7 +4,11 @@ class Comment {
   final int createdDate;
   final String content;
 
-  Comment({required this.id, required this.email, required this.createdDate, required this.content});
+  Comment(
+      {required this.id,
+      required this.email,
+      required this.createdDate,
+      required this.content});
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(

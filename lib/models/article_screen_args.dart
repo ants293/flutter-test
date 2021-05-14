@@ -1,5 +1,6 @@
 class ArticleScreenArgs {
   final String id;
+  final String title;
 
-  ArticleScreenArgs(this.id);
+  ArticleScreenArgs(this.id, this.title);
 }
