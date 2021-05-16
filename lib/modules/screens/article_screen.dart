@@ -40,7 +40,6 @@ class ArticleScreen extends StatelessWidget {
   }
 
   setUrl(String articleUrl) {
-    debugPrint(articleUrl);
     url = articleUrl;
   }
 }
