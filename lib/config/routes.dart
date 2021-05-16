@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:news_reader/modules/screens/article_screen.dart';
-import 'package:news_reader/modules/screens/home_screen.dart';
+import 'package:news_reader/screens/article_screen.dart';
+import 'package:news_reader/screens/home_screen.dart';
 
 class Routes {
-  static final routes = <String, WidgetBuilder> {
+  static final routes = <String, WidgetBuilder>{
     '/': (context) => HomeScreen(),
     ArticleScreen.routeName: (context) => ArticleScreen(),
   };

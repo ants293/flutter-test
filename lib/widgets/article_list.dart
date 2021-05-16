@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:news_reader/models/article.dart';
 import 'package:news_reader/models/article_screen_args.dart';
-import 'package:news_reader/modules/screens/article_screen.dart';
+import 'package:news_reader/screens/article_screen.dart';
 
 class ArticleList extends StatelessWidget {
   static String readArticles = """
