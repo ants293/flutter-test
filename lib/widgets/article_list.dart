@@ -3,6 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:news_reader/models/article.dart';
 import 'package:news_reader/models/article_screen_args.dart';
 import 'package:news_reader/screens/article_screen.dart';
+import 'package:news_reader/widgets/listing_image_placeholder.dart';
 
 class ArticleList extends StatelessWidget {
   static String readArticles = """
@@ -65,14 +66,21 @@ class ArticleList extends StatelessWidget {
         },
         child: Row(
           children: [
-            Image.network(img,
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                height: 100,
-                width: 100),
+            _getImage(img, context),
             SizedBox(width: 10),
             Expanded(child: Text(title)),
           ],
         ));
+  }
+
+  Widget _getImage(String imgUrl, BuildContext context) {
+    return Image.network(imgUrl, fit: BoxFit.cover, alignment: Alignment.center,
+        errorBuilder: (BuildContext context, url, error) {
+      return ListingImagePlaceholder(
+        width: 100,
+        height: 100,
+        failureText: 'Not found!',
+      );
+    }, height: 100, width: 100);
   }
 }
