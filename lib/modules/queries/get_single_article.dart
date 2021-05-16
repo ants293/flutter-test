@@ -74,11 +74,10 @@ class ArticleSingle extends StatelessWidget {
                           bottom: BorderSide(width: 0.8, color: Colors.blue),
                         ),
                       ),
-                      child: Expanded(
-                          child: Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _getComment(comment),
-                      ))),
+                      )),
                 )
               ],
             ),
