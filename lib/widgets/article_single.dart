@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:news_reader/models/article.dart';
 import 'package:news_reader/models/comment.dart';
+import 'package:news_reader/widgets/comment_form.dart';
 
 class ArticleSingle extends StatelessWidget {
   final String id;
@@ -78,7 +79,8 @@ class ArticleSingle extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _getComment(comment),
                       )),
-                )
+                ),
+                CommentForm()
               ],
             ),
           ),
