@@ -5,8 +5,9 @@ import 'package:news_reader/models/comment.dart';
 
 class ArticleSingle extends StatelessWidget {
   final String id;
+  final setUrl;
 
-  ArticleSingle(this.id);
+  ArticleSingle(this.id, this.setUrl);
 
   static String readSingleArticle = """
     query getArticlesList(\$id: ID!) {
@@ -44,6 +45,7 @@ class ArticleSingle extends StatelessWidget {
         }
 
         final article = Article.fromJson(result.data!['newsItem']);
+        this.setUrl(article.url);
 
         return SingleChildScrollView(
           child: Container(

@@ -60,7 +60,7 @@ class ArticleList extends StatelessWidget {
           Navigator.pushNamed(
             context,
             ArticleScreen.routeName,
-            arguments: ArticleScreenArgs(id, title),
+            arguments: ArticleScreenArgs(id),
           );
         },
         child: Row(
