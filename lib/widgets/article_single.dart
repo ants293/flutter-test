@@ -68,19 +68,7 @@ class ArticleSingle extends StatelessWidget {
                   child: Text(article.content),
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 ),
-                ...article.comments.map(
-                  (comment) => Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(width: 0.8, color: Colors.blue),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _getComment(comment),
-                      )),
-                ),
-                CommentForm()
+                ..._buildCommentArea(article.comments)
               ],
             ),
           ),
@@ -89,7 +77,25 @@ class ArticleSingle extends StatelessWidget {
     );
   }
 
-  static List<Widget> _getComment(Comment comment) {
+  List<Widget> _buildCommentArea(List<Comment> comments) {
+    return [
+      CommentForm(),
+      ...comments.map(
+        (comment) => Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 0.8, color: Colors.blue),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _buildComment(comment),
+            )),
+      ),
+    ];
+  }
+
+  static List<Widget> _buildComment(Comment comment) {
     return [
       SizedBox(height: 12),
       Text(

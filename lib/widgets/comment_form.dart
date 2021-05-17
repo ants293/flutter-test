@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 // Create a Form widget.
 class CommentForm extends StatefulWidget {
+  String content = '';
+  String email = '';
+
   static String createComment = """
     createComment(input: {
       newsId: \$id: ID!, email: \$email, content: \$content
@@ -46,7 +49,7 @@ class CommentFormState extends State<CommentForm> {
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
               },
-              child: Text('Add comment!'),
+              child: Text('Add comment'),
             ),
           ),
         ],

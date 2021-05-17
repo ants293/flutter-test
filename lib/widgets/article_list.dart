@@ -45,7 +45,7 @@ class ArticleList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
-                  _article(articles[index].id, articles[index].title,
+                  _buildArticle(articles[index].id, articles[index].title,
                       articles[index].img, context),
                   SizedBox(height: 15),
                 ],
@@ -55,7 +55,8 @@ class ArticleList extends StatelessWidget {
     );
   }
 
-  Widget _article(String id, String title, String img, BuildContext context) {
+  Widget _buildArticle(
+      String id, String title, String img, BuildContext context) {
     return InkWell(
         onTap: () {
           Navigator.pushNamed(
@@ -66,14 +67,14 @@ class ArticleList extends StatelessWidget {
         },
         child: Row(
           children: [
-            _getImage(img, context),
+            _buildImage(img, context),
             SizedBox(width: 10),
             Expanded(child: Text(title)),
           ],
         ));
   }
 
-  Widget _getImage(String imgUrl, BuildContext context) {
+  Widget _buildImage(String imgUrl, BuildContext context) {
     return Image.network(imgUrl, fit: BoxFit.cover, alignment: Alignment.center,
         errorBuilder: (BuildContext context, url, error) {
       return ListingImagePlaceholder(
