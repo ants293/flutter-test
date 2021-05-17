@@ -11,9 +11,9 @@ class ListingImagePlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: height,
-        width: width,
-        child:
-            Container(alignment: Alignment.center, child: Text(failureText)));
+      height: height,
+      width: width,
+      child: Container(alignment: Alignment.center, child: Text(failureText)),
+    );
   }
 }

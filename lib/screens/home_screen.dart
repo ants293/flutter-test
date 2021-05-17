@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:news_reader/widgets/article_list.dart';
+
+import '../widgets/article_list.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = 'home';
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("home")),
-      body: Container(child: ArticleList()),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('News Reader')),
+        body: const ArticleList(),
+      );
 }
