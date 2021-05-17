@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 // Create a Form widget.
 class CommentForm extends StatefulWidget {
-  String content = '';
-  String email = '';
+  @override
+  CommentFormState createState() {
+    return CommentFormState();
+  }
+}
 
+class CommentFormState extends State<CommentForm> {
   static String createComment = """
     createComment(input: {
-      newsId: \$id: ID!, email: \$email, content: \$content
+      newsId: \$newsId: ID!, email: \$email, content: \$content
       }){
         id
         email
@@ -16,14 +20,10 @@ class CommentForm extends StatefulWidget {
       }
   """;
 
-  @override
-  CommentFormState createState() {
-    return CommentFormState();
-  }
-}
-
-class CommentFormState extends State<CommentForm> {
   final _formKey = GlobalKey<FormState>();
+
+  String content = '';
+  String email = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,8 @@ class CommentFormState extends State<CommentForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-          ),
+          _buildInput((String val) => content = val, 'content'),
+          _buildInput((String val) => email = val, 'email'),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
@@ -48,12 +42,31 @@ class CommentFormState extends State<CommentForm> {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
+
+                _formKey.currentState!.save();
               },
               child: Text('Add comment'),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildInput(Function valSet, String inputLabel) {
+    return TextFormField(
+      decoration: InputDecoration(labelText: inputLabel),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Fill field please';
+        }
+        return null;
+      },
+      onSaved: (value) {
+        if (value != null) {
+          valSet(value);
+        }
+      },
     );
   }
 }
