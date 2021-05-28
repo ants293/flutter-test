@@ -1,45 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:news_reader/models/article_screen_args.dart';
-import 'package:news_reader/widgets/article_single.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:news_reader/utils/launch_url.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ArticleScreen extends StatelessWidget {
-  static const routeName = '/extractArguments';
-  String url = '';
+import '../models/article_screen_args.dart';
+import '../utils/launch_url.dart';
+import '../widgets/article_single.dart';
+
+class ArticleScreen extends HookWidget {
+  static const routeName = 'article';
+
+  // String _url = '';
 
   @override
   Widget build(BuildContext context) {
-    final ArticleScreenArgs args =
-        ModalRoute.of(context)!.settings.arguments as ArticleScreenArgs;
+    final articleUrl = useState<String?>(null);
+
+    final args =
+        ModalRoute.of(context)?.settings.arguments as ArticleScreenArgs?;
+
+    if (args == null) {
+      throw Exception('ArticleScreen expects arguments');
+    }
 
     return Scaffold(
-        appBar: AppBar(
-            title: Container(
-          child: Row(
-            children: [
-              Text(
-                'Reader',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-              Spacer(),
-              TextButton(
-                child: Text(
-                  "Link to article",
-                  style: TextStyle(fontSize: 10, color: Colors.white),
-                ),
-                onPressed: () {
-                  launchUrl(url);
-                },
-              ),
-            ],
-          ),
-        )),
-        body: ArticleSingle(args.id, setUrl));
-  }
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const Text(
+              'Reader',
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () {
+                if (articleUrl.value == null) {
+                  return;
+                }
 
-  setUrl(String articleUrl) {
-    url = articleUrl;
+                launchUrl(articleUrl.value!);
+              },
+              child: const Text(
+                'Link to article',
+                style: TextStyle(fontSize: 10, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: ArticleSingle(
+        id: args.id,
+        setUrl: (newUrl) => articleUrl.value = newUrl,
+      ),
+    );
   }
 }

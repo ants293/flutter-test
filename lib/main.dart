@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:news_reader/config/routes.dart';
 
-void main() async {
+import 'config/routes.dart';
+import 'screens/home_screen.dart';
+
+Future<void> main() async {
   await initHiveForFlutter();
 
   final HttpLink httpLink = HttpLink(
@@ -16,7 +18,13 @@ void main() async {
     ),
   );
 
-  runApp(GraphQLProvider(
+  runApp(
+    GraphQLProvider(
       client: client,
-      child: MaterialApp(initialRoute: '/', routes: Routes.routes)));
+      child: MaterialApp(
+        initialRoute: HomeScreen.routeName,
+        routes: routes,
+      ),
+    ),
+  );
 }
